@@ -165,5 +165,25 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+    @ExceptionHandler(UnauthorizedException.class)
+        public ResponseEntity<ApiResponseDTO<ErrorResponseDTO>> handleUnauthorizedException(
+                UnauthorizedException exception, WebRequest request) {
+                ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                        ZonedDateTime.now(),
+                        HttpStatus.UNAUTHORIZED.value(),
+                        HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                        exception.getMessage(),
+                        request.getDescription(false));
+        
+                ApiResponseDTO<ErrorResponseDTO> response = new ApiResponseDTO<>(
+                        false,
+                        "Acesso não autorizado.",
+                        null,
+                        errorResponse
+                );
+        
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
 }
 

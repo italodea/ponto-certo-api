@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<UserResponseDTO>> update(
             @PathVariable Long id,
             @RequestBody @Valid UserUpdateRequestDTO dto) {

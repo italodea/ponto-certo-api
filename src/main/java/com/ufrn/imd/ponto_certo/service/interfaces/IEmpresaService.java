@@ -9,6 +9,8 @@ public interface IEmpresaService {
 
     public EmpresaResponseDTO create(EmpresaCreateRequestDTO empresa);
 
+    public EmpresaResponseDTO findByUserId(Long userIdToken);
+
     public Empresa findByIdIfExists(Long id);
 
     public EmpresaResponseDTO findById(Long id);
@@ -16,5 +18,8 @@ public interface IEmpresaService {
     public void deleteById(Long id);
 
     public EmpresaResponseDTO update(EmpresaUpdateRequestDTO empresa, Long id);
+
+
+
     
 }

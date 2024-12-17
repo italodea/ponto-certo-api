@@ -1,5 +1,7 @@
 package com.ufrn.imd.ponto_certo.dto.request;
 
+import com.ufrn.imd.ponto_certo.model.User;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -11,5 +13,13 @@ public record EmpresaCreateRequestDTO(
     String cnpj,
     @Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[0-9])[0-9]{3}\\-[0-9]{4}$", message = "O número de telefone deve estar no formato (XX) XXXXX-XXXX.")
     String phone,
-    Long userId
-) {}
+    Long ownerId
+) {
+    public EmpresaCreateRequestDTO(String nome, String cnpj, String phone) {
+        this(nome, cnpj, phone, null);
+    }
+
+    public EmpresaCreateRequestDTO withOwnerId(Long ownerId) {
+        return new EmpresaCreateRequestDTO(this.nome, this.cnpj, this.phone, ownerId);
+    }
+}

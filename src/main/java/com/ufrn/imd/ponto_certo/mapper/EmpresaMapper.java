@@ -9,7 +9,6 @@ import com.ufrn.imd.ponto_certo.model.Empresa;
 
 @Mapper(componentModel = "spring")
 public interface EmpresaMapper {
-
     Empresa toEntity(EmpresaCreateRequestDTO createEmpresaRequestDTO);
     Empresa toEntity(EmpresaUpdateRequestDTO updateEmpresaRequestDTO);
     EmpresaResponseDTO toDTO(Empresa empresa);

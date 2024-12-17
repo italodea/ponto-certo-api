@@ -81,6 +81,7 @@ public class UserService implements IUserService {
     private void validateBeforeSave(User entity) {
         validateEmail(entity.getEmail(), entity.getId());
         validatePhoneNumber(entity.getPhoneNumber(), entity.getId());
+        validateCpf(entity.getCpf(), entity.getId());
     }
 
     private void validateEmail(String email, Long id) {
@@ -88,7 +89,7 @@ public class UserService implements IUserService {
         if (user.isPresent() && (id == null || !user.get().getId().equals(id))) {
             throw new BusinessException(
                     "E-mail inválido: " + email + ". Um usuário cadastrado já utiliza este e-mail.",
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.CONFLICT
             );
         }
     }
@@ -98,7 +99,17 @@ public class UserService implements IUserService {
         if (user.isPresent() && (id == null || !user.get().getId().equals(id))) {
             throw new BusinessException(
                     "Número de telefone inválido: " + phone + ". Um usuário cadastrado já utiliza este número de telefone.",
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.CONFLICT
+            );
+        }
+    }
+
+    private void validateCpf(String cpf, Long id) {
+        Optional<User> user = userRepository.findByCpfAndActiveTrue(cpf);
+        if (user.isPresent() && (id == null || !user.get().getId().equals(id))) {
+            throw new BusinessException(
+                    "CPF inválido: " + cpf + ". Um usuário cadastrado já utiliza este CPF.",
+                    HttpStatus.CONFLICT
             );
         }
     }
