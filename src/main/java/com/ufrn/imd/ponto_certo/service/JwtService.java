@@ -1,7 +1,6 @@
 package com.ufrn.imd.ponto_certo.service;
 
 import com.ufrn.imd.ponto_certo.model.UserDetailsImpl;
-import com.ufrn.imd.ponto_certo.service.interfaces.IJwtService;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
@@ -18,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtService implements IJwtService {
+public class JwtService {
 
     @Value("${secret.key}")
     private String SECRET_KEY;
@@ -29,14 +28,12 @@ public class JwtService implements IJwtService {
         this.httpServletRequest = httpServletRequest;
     }
 
-    @Override
     public Long extractUserIdFromRequest() {
         String token = httpServletRequest.getHeader("Authorization").substring(7);
         var userId = extractClaim(token, claims -> claims.get("id", String.class));
         return Long.valueOf(userId);
     }
 
-    @Override
     public boolean isValid(String token, UserDetails user){
         String username = extractUsername(token);
         return username.equals(user.getUsername()) && !isTokenExpired(token);
@@ -50,12 +47,10 @@ public class JwtService implements IJwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    @Override
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
     }
 
-    @Override
     public <T> T extractClaim(String token, Function<Claims, T> resolver){
         Claims claims = extractAllClaims(token);
         return resolver.apply(claims);
@@ -75,7 +70,6 @@ public class JwtService implements IJwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    @Override
     public String generateToken(UserDetailsImpl user){
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("id", String.valueOf(user.getUser().getId()));

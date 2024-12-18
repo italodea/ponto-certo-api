@@ -4,7 +4,8 @@ import com.ufrn.imd.ponto_certo.dto.request.UserCreateRequestDTO;
 import com.ufrn.imd.ponto_certo.dto.request.UserUpdateRequestDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.UserResponseDTO;
-import com.ufrn.imd.ponto_certo.service.interfaces.IUserService;
+import com.ufrn.imd.ponto_certo.service.UserService;
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
-    public UserController(IUserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

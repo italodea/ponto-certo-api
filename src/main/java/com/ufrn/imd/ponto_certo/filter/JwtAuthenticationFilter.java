@@ -1,6 +1,6 @@
 package com.ufrn.imd.ponto_certo.filter;
 
-import com.ufrn.imd.ponto_certo.service.interfaces.IJwtService;
+import com.ufrn.imd.ponto_certo.service.JwtService;
 import com.ufrn.imd.ponto_certo.util.EndpointChecker;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -24,12 +24,12 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final IJwtService IJwtService;
+    private final JwtService IJwtService;
     private final UserDetailsService userDetailsService;
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final EndpointChecker endpointChecker;
 
-    public JwtAuthenticationFilter(IJwtService IJwtService,
+    public JwtAuthenticationFilter(JwtService IJwtService,
                                    UserDetailsService userDetailsService,
                                    HandlerExceptionResolver handlerExceptionResolver,
                                    EndpointChecker endpointChecker) {

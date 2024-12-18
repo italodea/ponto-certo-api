@@ -16,7 +16,7 @@ import com.ufrn.imd.ponto_certo.dto.request.FuncionarioUpdateRequestDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.FuncionarioResponseDTO;
 import com.ufrn.imd.ponto_certo.service.FuncionarioService;
-import com.ufrn.imd.ponto_certo.service.interfaces.IJwtService;
+import com.ufrn.imd.ponto_certo.service.JwtService;
 
 import lombok.AllArgsConstructor;
 
@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/funcionario")
 public class FuncionarioController {
     private final FuncionarioService service;
-    private final IJwtService jwtService;
+    private final JwtService jwtService;
 
     @GetMapping()
     public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> find() {

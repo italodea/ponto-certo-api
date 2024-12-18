@@ -8,8 +8,6 @@ import com.ufrn.imd.ponto_certo.mapper.UserMapper;
 import com.ufrn.imd.ponto_certo.model.User;
 import com.ufrn.imd.ponto_certo.repository.UserRepository;
 import com.ufrn.imd.ponto_certo.exception.BusinessException;
-import com.ufrn.imd.ponto_certo.service.interfaces.IUserService;
-import com.ufrn.imd.ponto_certo.service.interfaces.IUserValidationService;
 import com.ufrn.imd.ponto_certo.util.AttributeUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
@@ -20,17 +18,17 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private final IUserValidationService IUserValidationService;
+    private final UserValidationService IUserValidationService;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        UserMapper userMapper,
-                       IUserValidationService IUserValidationService) {
+                       UserValidationService IUserValidationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
@@ -38,7 +36,6 @@ public class UserService implements IUserService {
     }
 
     @Transactional
-    @Override
     public void delete(Long userId) {
         IUserValidationService.validateUser(userId);
         User user = findById(userId);
@@ -47,7 +44,6 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
-    @Override
     public UserResponseDTO update(UserUpdateRequestDTO dto, Long userId) {
         User user = findById(userId);
         validateBeforeUpdate(user);
@@ -56,7 +52,6 @@ public class UserService implements IUserService {
         return userMapper.toDto(userRepository.save(user));
     }
 
-    @Override
     public UserResponseDTO save(UserCreateRequestDTO dto) {
         User entity = userMapper.toEntity(dto);
         validateBeforeSave(entity);
@@ -65,7 +60,6 @@ public class UserService implements IUserService {
         return userMapper.toDto(userRepository.save(entity));
     }
 
-    @Override
     public User findById(Long userId) {
         return userRepository.findByIdAndActiveTrue(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(

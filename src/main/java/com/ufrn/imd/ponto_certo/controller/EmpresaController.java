@@ -15,7 +15,7 @@ import com.ufrn.imd.ponto_certo.dto.request.EmpresaUpdateRequestDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.EmpresaResponseDTO;
 import com.ufrn.imd.ponto_certo.service.EmpresaService;
-import com.ufrn.imd.ponto_certo.service.interfaces.IJwtService;
+import com.ufrn.imd.ponto_certo.service.JwtService;
 
 import lombok.AllArgsConstructor;
 
@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class EmpresaController {
     
     private EmpresaService service;
-    private IJwtService jwtService;
+    private JwtService jwtService;
 
     @GetMapping
     public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> find() {

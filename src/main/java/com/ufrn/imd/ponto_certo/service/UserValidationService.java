@@ -2,20 +2,17 @@ package com.ufrn.imd.ponto_certo.service;
 
 import com.ufrn.imd.ponto_certo.exception.ForbiddenOperationException;
 
-import com.ufrn.imd.ponto_certo.service.interfaces.IJwtService;
-import com.ufrn.imd.ponto_certo.service.interfaces.IUserValidationService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserValidationService implements IUserValidationService {
+public class UserValidationService {
 
-    private final IJwtService jwtService;
+    private final JwtService jwtService;
 
-    public UserValidationService(IJwtService jwtService) {
+    public UserValidationService(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
-    @Override
     public void validateUser(Long userId, String errorMessage) {
         Long userIdToken = jwtService.extractUserIdFromRequest();
 
@@ -27,7 +24,6 @@ public class UserValidationService implements IUserValidationService {
 
     }
 
-    @Override
     public void validateUser(Long userId) {
         validateUser(userId, null);
     }
