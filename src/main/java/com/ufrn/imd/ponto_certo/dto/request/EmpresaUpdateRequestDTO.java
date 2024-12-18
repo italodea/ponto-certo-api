@@ -1,6 +1,5 @@
 package com.ufrn.imd.ponto_certo.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record EmpresaUpdateRequestDTO(

@@ -2,8 +2,8 @@ package com.ufrn.imd.ponto_certo.model.enums;
 
 public enum EnumTipoAcesso {
     ADMIN("Admin"),
-    FUNCIONARIO("Funcionário"),
-    GESTOR("Gestor");
+    GESTOR("Gestor"),
+    FUNCIONARIO("Funcionário");
 
     private final String description;
 

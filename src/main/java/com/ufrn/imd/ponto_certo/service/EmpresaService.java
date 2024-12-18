@@ -1,6 +1,5 @@
 package com.ufrn.imd.ponto_certo.service;
 
-import java.text.AttributedCharacterIterator.Attribute;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
