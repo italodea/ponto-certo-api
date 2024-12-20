@@ -27,23 +27,36 @@ public class EmpresaController {
     private EmpresaService service;
     private JwtService jwtService;
 
-    @GetMapping
-    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> find() {
-        Long userIdToken = jwtService.extractUserIdFromRequest();
-        EmpresaResponseDTO empresa = service.findByUserId(userIdToken);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> findById(@PathVariable Long id) {
+        EmpresaResponseDTO empresa = service.findById(id);
         ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Empresa encontrada com sucesso.",
-            empresa,
-            null
+                true,
+                "Empresa encontrada com sucesso.",
+                empresa,
+                null
         );
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> findById(@PathVariable Long id) {
-        EmpresaResponseDTO empresa = service.findById(id);
+    @GetMapping("/invite_code/{invite_code}")
+    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> findByInviteCode(@PathVariable String invite_code) {
+        EmpresaResponseDTO empresa = service.findByInviteCode(invite_code);
+        ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
+                true,
+                "Empresa encontrada com sucesso.",
+                empresa,
+                null
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> find() {
+        Long userIdToken = jwtService.extractUserIdFromRequest();
+        EmpresaResponseDTO empresa = service.findByUserId(userIdToken);
         ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
             true,
             "Empresa encontrada com sucesso.",

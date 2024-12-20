@@ -13,4 +13,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     Optional<Empresa> findByUserId(Long userIdToken);
 
     Optional<Empresa> findByCnpj(String cnpj);
+
+    @Query("SELECT e FROM Empresa e Where e.inviteCode = ?1")
+    Optional<Empresa> findByInviteCode(String invite_code);
 }

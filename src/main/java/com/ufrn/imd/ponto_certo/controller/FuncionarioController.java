@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,10 +54,10 @@ public class FuncionarioController {
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> create(
-        @RequestBody FuncionarioCreateRequestDTO body
-    ) {
-        FuncionarioResponseDTO funcionario = service.create(body);
+    public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> create(@RequestBody FuncionarioCreateRequestDTO data) {
+        Long userIdToken = jwtService.extractUserIdFromRequest();
+        data = data.withUserId(userIdToken);
+        FuncionarioResponseDTO funcionario = service.create(data);
         ApiResponseDTO<FuncionarioResponseDTO> response = new ApiResponseDTO<>(
             true,
             "Funcionario criado com sucesso.",

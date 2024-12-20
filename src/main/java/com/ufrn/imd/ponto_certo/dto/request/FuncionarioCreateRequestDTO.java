@@ -4,15 +4,19 @@ import com.ufrn.imd.ponto_certo.model.enums.EnumRegime;
 import com.ufrn.imd.ponto_certo.model.enums.EnumTrabalho;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 public record FuncionarioCreateRequestDTO(
+    @NotBlank
     Long empresaId,
     EnumRegime tipoRegime,
     EnumTrabalho tipoTrabalho,
-    @NotBlank
-    String nome,
-    @NotBlank
-    @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}$", message = "CPF inválido")
-    String cpf
-) {}
+    Long userId
+) {
+    public FuncionarioCreateRequestDTO(Long empresaId, EnumRegime tipoRegime, EnumTrabalho tipoTrabalho) {
+        this(empresaId, tipoRegime, tipoTrabalho, null);
+    }
+
+    public FuncionarioCreateRequestDTO withUserId(Long userId) {
+        return new FuncionarioCreateRequestDTO(this.empresaId, this.tipoRegime, this.tipoTrabalho, userId);
+    }
+}

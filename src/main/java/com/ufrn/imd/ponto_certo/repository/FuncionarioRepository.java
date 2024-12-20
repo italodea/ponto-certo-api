@@ -12,7 +12,8 @@ import com.ufrn.imd.ponto_certo.model.Funcionario;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
     
     @Query("SELECT f FROM Funcionario f WHERE f.user.id = ?1")
-    Optional<Funcionario> getByUserId(Long userId);
+    Optional<Funcionario> findByUserId(Long userId);
+
 
     
 }

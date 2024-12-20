@@ -35,8 +35,17 @@ public class EmpresaService {
                 "Empresa não encontrada para este usuário."));
     }
 
+    public Empresa findCompanyByInviteCode(String invite_code){
+        return empresaRepository.findByInviteCode(invite_code).orElseThrow(() -> new ResourceNotFoundException(
+                "Este código não pertence a uma empresa."));
+    }
+
     public EmpresaResponseDTO findById(Long id) {
         return empresaMapper.toDTO(this.findByIdIfExists(id));
+    }
+
+    public EmpresaResponseDTO findByInviteCode(String invite_code) {
+        return empresaMapper.toDTO(this.findCompanyByInviteCode(invite_code));
     }
 
     public EmpresaResponseDTO findByUserId(Long userIdToken) {
