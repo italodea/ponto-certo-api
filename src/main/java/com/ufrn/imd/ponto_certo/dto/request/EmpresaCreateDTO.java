@@ -1,11 +1,9 @@
 package com.ufrn.imd.ponto_certo.dto.request;
 
-import com.ufrn.imd.ponto_certo.model.User;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record EmpresaCreateRequestDTO(
+public record EmpresaCreateDTO(
     @NotBlank(message = "Nome é obrigatório")
     String nome,
     @NotBlank(message = "CNPJ é obrigatório")
@@ -15,11 +13,11 @@ public record EmpresaCreateRequestDTO(
     String phone,
     Long ownerId
 ) {
-    public EmpresaCreateRequestDTO(String nome, String cnpj, String phone) {
+    public EmpresaCreateDTO(String nome, String cnpj, String phone) {
         this(nome, cnpj, phone, null);
     }
 
-    public EmpresaCreateRequestDTO withOwnerId(Long ownerId) {
-        return new EmpresaCreateRequestDTO(this.nome, this.cnpj, this.phone, ownerId);
+    public EmpresaCreateDTO withOwnerId(Long ownerId) {
+        return new EmpresaCreateDTO(this.nome, this.cnpj, this.phone, ownerId);
     }
 }

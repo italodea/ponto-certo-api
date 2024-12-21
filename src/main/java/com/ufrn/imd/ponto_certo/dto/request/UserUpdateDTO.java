@@ -3,7 +3,7 @@ package com.ufrn.imd.ponto_certo.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
-public record UserUpdateRequestDTO(
+public record UserUpdateDTO(
         String firstName,
         String lastName,
         @Email

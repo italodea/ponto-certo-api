@@ -1,7 +1,7 @@
 package com.ufrn.imd.ponto_certo.controller;
 
-import com.ufrn.imd.ponto_certo.dto.request.UserCreateRequestDTO;
-import com.ufrn.imd.ponto_certo.dto.request.UserUpdateRequestDTO;
+import com.ufrn.imd.ponto_certo.dto.request.UserCreateDTO;
+import com.ufrn.imd.ponto_certo.dto.request.UserUpdateDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.UserResponseDTO;
 import com.ufrn.imd.ponto_certo.service.UserService;
@@ -28,35 +28,32 @@ public class UserController {
                 true,
                 "Usuário removido com sucesso.",
                 null,
-                null
-        );
+                null);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<UserResponseDTO>> update(
             @PathVariable Long id,
-            @RequestBody @Valid UserUpdateRequestDTO dto) {
+            @RequestBody @Valid UserUpdateDTO dto) {
 
         ApiResponseDTO<UserResponseDTO> response = new ApiResponseDTO<>(
                 true,
                 "Usuário atualizado com sucesso.",
                 userService.update(dto, id),
-                null
-        );
+                null);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponseDTO<UserResponseDTO>> save(
-            @Valid @RequestBody UserCreateRequestDTO dto) {
+            @Valid @RequestBody UserCreateDTO dto) {
 
         ApiResponseDTO<UserResponseDTO> response = new ApiResponseDTO<>(
                 true,
                 "Usuário criado com sucesso.",
                 userService.save(dto),
-                null
-        );
+                null);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

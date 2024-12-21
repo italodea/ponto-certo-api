@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufrn.imd.ponto_certo.dto.request.EmpresaCreateRequestDTO;
-import com.ufrn.imd.ponto_certo.dto.request.EmpresaUpdateRequestDTO;
+import com.ufrn.imd.ponto_certo.dto.request.EmpresaCreateDTO;
+import com.ufrn.imd.ponto_certo.dto.request.EmpresaUpdateDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.EmpresaResponseDTO;
 import com.ufrn.imd.ponto_certo.service.EmpresaService;
@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/empresa")
 @AllArgsConstructor
 public class EmpresaController {
-    
+
     private EmpresaService service;
     private JwtService jwtService;
 
@@ -34,8 +34,7 @@ public class EmpresaController {
                 true,
                 "Empresa encontrada com sucesso.",
                 empresa,
-                null
-        );
+                null);
 
         return ResponseEntity.ok(response);
     }
@@ -47,8 +46,7 @@ public class EmpresaController {
                 true,
                 "Empresa encontrada com sucesso.",
                 empresa,
-                null
-        );
+                null);
 
         return ResponseEntity.ok(response);
     }
@@ -58,41 +56,38 @@ public class EmpresaController {
         Long userIdToken = jwtService.extractUserIdFromRequest();
         EmpresaResponseDTO empresa = service.findByUserId(userIdToken);
         ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Empresa encontrada com sucesso.",
-            empresa,
-            null
-        );
+                true,
+                "Empresa encontrada com sucesso.",
+                empresa,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> create(@RequestBody EmpresaCreateRequestDTO data) {
+    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> create(@RequestBody EmpresaCreateDTO data) {
         Long userIdToken = jwtService.extractUserIdFromRequest();
         data = data.withOwnerId(userIdToken);
         EmpresaResponseDTO empresa = service.create(data);
         ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Empresa criada com sucesso.",
-            empresa,
-            null
-        );
+                true,
+                "Empresa criada com sucesso.",
+                empresa,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping
-    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> update(@RequestBody EmpresaUpdateRequestDTO data) {
+    public ResponseEntity<ApiResponseDTO<EmpresaResponseDTO>> update(@RequestBody EmpresaUpdateDTO data) {
         Long userIdToken = jwtService.extractUserIdFromRequest();
         EmpresaResponseDTO empresaFromUser = service.findByUserId(userIdToken);
         EmpresaResponseDTO empresa = service.update(data, empresaFromUser.id());
         ApiResponseDTO<EmpresaResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Empresa atualizada com sucesso.",
-            empresa,
-            null
-        );
+                true,
+                "Empresa atualizada com sucesso.",
+                empresa,
+                null);
 
         return ResponseEntity.ok(response);
     }
@@ -103,11 +98,10 @@ public class EmpresaController {
         EmpresaResponseDTO empresa = service.findByUserId(userIdToken);
         service.deleteById(empresa.id());
         ApiResponseDTO<?> response = new ApiResponseDTO<>(
-            true,
-            "Empresa removida com sucesso.",
-            null,
-            null
-        );
+                true,
+                "Empresa removida com sucesso.",
+                null,
+                null);
 
         return ResponseEntity.ok(response);
     }

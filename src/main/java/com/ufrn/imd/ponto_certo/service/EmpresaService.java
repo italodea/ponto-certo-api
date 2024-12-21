@@ -6,8 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.ufrn.imd.ponto_certo.dto.request.EmpresaCreateRequestDTO;
-import com.ufrn.imd.ponto_certo.dto.request.EmpresaUpdateRequestDTO;
+import com.ufrn.imd.ponto_certo.dto.request.EmpresaCreateDTO;
+import com.ufrn.imd.ponto_certo.dto.request.EmpresaUpdateDTO;
 import com.ufrn.imd.ponto_certo.dto.response.EmpresaResponseDTO;
 import com.ufrn.imd.ponto_certo.exception.BusinessException;
 import com.ufrn.imd.ponto_certo.exception.ResourceNotFoundException;
@@ -52,7 +52,7 @@ public class EmpresaService {
         return empresaMapper.toDTO(findByUserIdIfExists(userIdToken));
     }
 
-    public EmpresaResponseDTO create(EmpresaCreateRequestDTO data) {
+    public EmpresaResponseDTO create(EmpresaCreateDTO data) {
         if (empresaRepository.findByUserId(data.ownerId()) != null) {
             throw new UnauthorizedException("Já possui uma empresa cadastrada.");
         }
@@ -62,7 +62,7 @@ public class EmpresaService {
         return empresaMapper.toDTO(this.save(empresa));
     }
 
-    public EmpresaResponseDTO update(EmpresaUpdateRequestDTO data, Long id) {
+    public EmpresaResponseDTO update(EmpresaUpdateDTO data, Long id) {
         Empresa empresa = this.findByIdIfExists(id);
 
         BeanUtils.copyProperties(data, empresa, AttributeUtils.getNullOrBlankPropertyNames(data));

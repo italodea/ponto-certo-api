@@ -11,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -36,10 +37,10 @@ public class Funcionario extends BaseEntity{
     private EnumTrabalho tipoTrabalho;
 
     @Column(nullable = false, name = "user_id")
-    private Long userId;    
+    private Long userId;
 
+    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
 }

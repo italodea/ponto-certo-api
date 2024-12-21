@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufrn.imd.ponto_certo.dto.request.FuncionarioCreateRequestDTO;
-import com.ufrn.imd.ponto_certo.dto.request.FuncionarioUpdateRequestDTO;
+import com.ufrn.imd.ponto_certo.dto.request.FuncionarioCreateDTO;
+import com.ufrn.imd.ponto_certo.dto.request.FuncionarioUpdateDTO;
 import com.ufrn.imd.ponto_certo.dto.response.ApiResponseDTO;
 import com.ufrn.imd.ponto_certo.dto.response.FuncionarioResponseDTO;
 import com.ufrn.imd.ponto_certo.service.FuncionarioService;
@@ -31,68 +31,65 @@ public class FuncionarioController {
         Long userIdToken = jwtService.extractUserIdFromRequest();
         FuncionarioResponseDTO funcionario = service.findByUserId(userIdToken);
         ApiResponseDTO<FuncionarioResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Funcionario encontrado com sucesso.",
-            funcionario,
-            null
-        );
+                true,
+                "Funcionario encontrado com sucesso.",
+                funcionario,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> findById(@PathVariable Long id) {
-        FuncionarioResponseDTO funcionario = service.findById(id);
+        Long userIdToken = jwtService.extractUserIdFromRequest();
+        FuncionarioResponseDTO funcionario = service.findById(id, userIdToken);
         ApiResponseDTO<FuncionarioResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Funcionario encontrado com sucesso.",
-            funcionario,
-            null
-        );
+                true,
+                "Funcionario encontrado com sucesso.",
+                funcionario,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping()
-    public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> create(@RequestBody FuncionarioCreateRequestDTO data) {
+    public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> create(
+            @RequestBody FuncionarioCreateDTO data) {
         Long userIdToken = jwtService.extractUserIdFromRequest();
         data = data.withUserId(userIdToken);
         FuncionarioResponseDTO funcionario = service.create(data);
         ApiResponseDTO<FuncionarioResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Funcionario criado com sucesso.",
-            funcionario,
-            null
-        );
+                true,
+                "Funcionario criado com sucesso.",
+                funcionario,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<FuncionarioResponseDTO>> update(
-        @RequestBody FuncionarioUpdateRequestDTO body,
-        @PathVariable Long id
-    ) {
+            @RequestBody FuncionarioUpdateDTO body,
+            @PathVariable Long id) {
         FuncionarioResponseDTO funcionario = service.update(body, id);
         ApiResponseDTO<FuncionarioResponseDTO> response = new ApiResponseDTO<>(
-            true,
-            "Funcionario atualizado com sucesso.",
-            funcionario,
-            null
-        );
+                true,
+                "Funcionario atualizado com sucesso.",
+                funcionario,
+                null);
 
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseDTO<Void>> deleteById(@PathVariable Long id) {
-        service.deleteById(id);
+        Long userIdToken = jwtService.extractUserIdFromRequest();
+        service.deleteById(id, userIdToken);
         ApiResponseDTO<Void> response = new ApiResponseDTO<>(
-            true,
-            "Funcionario deletado com sucesso.",
-            null,
-            null
-        );
+                true,
+                "Funcionario deletado com sucesso.",
+                null,
+                null);
 
         return ResponseEntity.ok(response);
     }
